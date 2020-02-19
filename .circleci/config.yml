@@ -1,5 +1,10 @@
 version: 2.1
 
+executors:
+  custom-node:
+    docker:
+      - image: circleci/node
+
 commands:
   generatelogs:
     description: "A command to generate a log file"
@@ -9,7 +14,7 @@ commands:
         default: "~/randomfolder"
     steps:
       - run: echo "Log file" > <<parameters.path>>/log.txt
-  endMission:
+  endmission:
     description: "Use the parameters of this command to exit this mission with a green build."
     parameters:
       exitCode:
@@ -21,8 +26,6 @@ commands:
 jobs:
   orb-intro:
     executor: custom-node
-      docker:
-        - image: circleci/node
     steps:
       - run: echo "console.log('complete')" | node
       - generatelogs
@@ -33,7 +36,7 @@ jobs:
               echo "The log should exist at ~/project/log.txt after running the 'generatelogs' command"
               exit 1
             fi
-      - endMission
+      - endmission
 
 
 
